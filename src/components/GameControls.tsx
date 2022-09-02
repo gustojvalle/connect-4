@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import { FC } from "react";
 import { useRecoilValue, useResetRecoilState } from "recoil";
 import { boardState, gameOverState, playerState } from "state";
@@ -25,8 +25,10 @@ const GameControls: FC = ( ) => {
     <Button onClick={handleReset} isDisabled={!board.some((col) => col.length)}>
       Reset
     </Button>
-    <PlayerInformationForm player={1} />
-    <PlayerInformationForm player={2} />
+    <Box display={'flex'} flexDir={[ 'column', 'row']}>
+      <PlayerInformationForm player={1} />
+      <PlayerInformationForm player={2} />
+    </Box>
     </div>
   );
 };

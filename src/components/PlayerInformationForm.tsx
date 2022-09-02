@@ -1,3 +1,4 @@
+
 import { Box, Button, Input } from '@chakra-ui/react'
 import React, {  useState } from 'react'
 import { useRecoilState } from 'recoil';
@@ -30,15 +31,17 @@ export const PlayerInformationForm = ({player}:Props) => {
 
 
   return (
-    <Box>
+    
     <form onSubmit= {onConfirm} className={css.root}>
+        <Box display={'flex'} marginEnd={8}>
         <label>Player {player} Name</label>
 
-        <Input onChange={handleChange} type="text" name={`name`} id={`player${player}Name`} placeholder={playersInfo[playerString].name}  />
-        <Input onChange={handleChange} type="color" name={`color`} id={`player${player}Color`} value={formState.color}/>
+        <Input  onChange={handleChange} type="text" name={`name`} id={`player${player}Name`} placeholder={playersInfo[playerString].name}  />
+        <Input width={30} padding={0} onChange={handleChange} type="color" name={`color`} id={`player${player}Color`} value={formState.color}/>
 
-        <Button type='submit'>Confirm Player {player}</Button>
+        <Button type='submit'></Button>
+        </Box>
     </form>
-    </Box>
+
   )
 }
