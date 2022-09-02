@@ -3,7 +3,7 @@ import { boardRows, playerColor } from "const";
 import { usePlayPiece } from "hooks";
 import { FC } from "react";
 import { useRecoilValue } from "recoil";
-import { boardState, gameOverState, playerState } from "state";
+import { boardState, gameOverState, playersInfoState, playerState } from "state";
 import { Player } from "types";
 
 const padCol = (col: number[]): number[] =>
@@ -14,6 +14,8 @@ const Board: FC = () => {
   const board = useRecoilValue(boardState);
   const player = useRecoilValue(playerState);
   const gameOver = useRecoilValue(gameOverState);
+  const playersInfo = useRecoilValue(playersInfoState);
+
 
   return (
     <Flex justify="center">
@@ -25,21 +27,23 @@ const Board: FC = () => {
           flexDirection="column-reverse"
           cursor={gameOver ? "auto" : "pointer"}
         >
-          {padCol(col).map((p, j) => (
+          {padCol(col).map((p, j) => {
+            
+            return (
             <Circle
               m={1}
               size="40px"
               key={`${i}-${j}`}
               boxShadow="inner"
-              bg={playerColor[p as Player] || "gray.300"}
+              bg={playersInfo[`player${p as Player}`]?.color || "gray.300"}
             />
-          ))}
+          )})}
           <Circle
             m={1}
             size="40px"
             boxShadow="base"
             visibility="hidden"
-            bg={playerColor[player]}
+            bg={playersInfo[`player${player}`]?.color}
             _groupHover={{
               visibility: gameOver ? "hidden" : "visible",
             }}

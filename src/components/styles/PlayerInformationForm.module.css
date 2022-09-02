@@ -1,0 +1,8 @@
+.root {
+    display: flex;
+    flex-direction: column;
+}
+
+.rootProgress {
+    margin: 24px 24px !important;
+}
