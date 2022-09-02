@@ -1,9 +1,9 @@
 import { Circle, Flex } from "@chakra-ui/react";
 import { boardRows, playerColor } from "const";
 import { usePlayPiece } from "hooks";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useRecoilValue } from "recoil";
-import { boardState, gameOverState, playersInfoState, playerState } from "state";
+import { boardState, gameOverState, playersInfoState, playerState, PlayWithBotState } from "state";
 import { Player } from "types";
 
 const padCol = (col: number[]): number[] =>
@@ -15,6 +15,15 @@ const Board: FC = () => {
   const player = useRecoilValue(playerState);
   const gameOver = useRecoilValue(gameOverState);
   const playersInfo = useRecoilValue(playersInfoState);
+  const playWithBot = useRecoilValue(PlayWithBotState);
+
+  useEffect(()=> {
+    if(player ===2 && playWithBot){
+      const nextMove = Math.floor(Math.random()*board.length)
+      setTimeout(() => play(nextMove), 1000)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [player])
 
 
   return (
@@ -23,7 +32,7 @@ const Board: FC = () => {
         <Flex
           key={i}
           role="group"
-          onClick={() => play(i)}
+          onClick={() => (player === 1 || !playWithBot )&& play(i)}
           flexDirection="column-reverse"
           cursor={gameOver ? "auto" : "pointer"}
         >
@@ -45,7 +54,7 @@ const Board: FC = () => {
             visibility="hidden"
             bg={playersInfo[`player${player}`]?.color}
             _groupHover={{
-              visibility: gameOver ? "hidden" : "visible",
+              visibility: gameOver || (playWithBot && player===2) ? "hidden" : "visible",
             }}
           />
         </Flex>

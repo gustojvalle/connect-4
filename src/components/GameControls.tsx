@@ -1,7 +1,7 @@
-import { Box, Button } from "@chakra-ui/react";
-import { FC } from "react";
-import { useRecoilValue, useResetRecoilState } from "recoil";
-import { boardState, gameOverState, playerState } from "state";
+import { Box, Button, FormLabel, Switch } from "@chakra-ui/react";
+import React, { FC } from "react";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import { boardState, gameOverState, playerState, PlayWithBotState } from "state";
 import { PlayerInformationForm } from "./PlayerInformationForm";
 
 
@@ -20,16 +20,24 @@ const GameControls: FC = ( ) => {
     resetGameOver();
   };
 
+  const [bot, setBot] = useRecoilState(PlayWithBotState)
+  const handleSwitch = (e: React.FormEvent) =>{
+   const target = e.target as  any; 
+    setBot(target.checked)
+  }
+
   return (
-    <div>
-    <Button onClick={handleReset} isDisabled={!board.some((col) => col.length)}>
+    <Box display={'flex'} flexDir={'column'} alignItems={'center'}>
+    <Button marginBottom={8} onClick={handleReset} isDisabled={!board.some((col) => col.length)}>
       Reset
     </Button>
+    <FormLabel >Play with bot</FormLabel>
+    <Switch marginBottom={8} isChecked={bot} onChange={handleSwitch} />
     <Box display={'flex'} flexDir={[ 'column', 'row']}>
       <PlayerInformationForm player={1} />
-      <PlayerInformationForm player={2} />
+      {!bot && <PlayerInformationForm player={2} />}
     </Box>
-    </div>
+    </Box>
   );
 };
 

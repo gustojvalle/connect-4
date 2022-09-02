@@ -33,3 +33,8 @@ export const gameStatsState = atom<Stats>({
     player2Wins: 0,
   },
 });
+
+export const PlayWithBotState = atom<boolean>({
+  key: "playWithBot",
+  default: false,
+});

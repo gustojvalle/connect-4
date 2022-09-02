@@ -111,6 +111,7 @@ const usePlayPiece = () => {
   const [player, setPlayerTurn] = useRecoilState(playerState);
   const [gameOver, setGameOver] = useRecoilState(gameOverState);
   const [_, setGameStats] = useRecoilState(gameStatsState);
+
   return (col: number) => {
     // Prevent adding a piece when the game is over
     if (gameOver) {
